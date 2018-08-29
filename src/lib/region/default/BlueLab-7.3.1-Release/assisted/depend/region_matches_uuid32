@@ -1,0 +1,10 @@
+region/default/BlueLab-7.3.1-Release/assisted/region_matches_uuid32.o:  \
+ region/region_matches_uuid32.c region/region.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/string.h
+
+region/region.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/string.h:

@@ -1,0 +1,102 @@
+ \
+ voice_assistant_packetiser/default/BlueLab-7.3.1-Release/assisted/voice_assistant_packet_send.o:  \
+ voice_assistant_packetiser/voice_assistant_packet_send.c \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/string.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/vm.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/vm/vm_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/bdaddr_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/gaia.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/library.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/vmtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/bdaddr.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/bluestack/types.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/limits.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/bluestack/bluetooth.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/sink_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/message/system_message.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/adc/adc_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/usb/usb_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/capsense/capsense_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/partition/partition_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/infrared/infrared_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/validation/validation_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/source_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/status/status_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/gatt.h \
+  voice_assistant_packetiser/voice_assistant_packetiser_private.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdio.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stdarg.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h \
+  voice_assistant_packetiser/voice_assistant_packet_send.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/source.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/stream/stream_if.h
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/string.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/vm.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/vm/vm_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/bdaddr_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/gaia.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/library.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/vmtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/bdaddr.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/bluestack/types.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/limits.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/bluestack/bluetooth.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/sink_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/message/system_message.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/adc/adc_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/usb/usb_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/capsense/capsense_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/partition/partition_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/infrared/infrared_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/validation/validation_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/source_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/status/status_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/gatt.h:
+
+voice_assistant_packetiser/voice_assistant_packetiser_private.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdio.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stdarg.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h:
+
+voice_assistant_packetiser/voice_assistant_packet_send.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/source.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/stream/stream_if.h:

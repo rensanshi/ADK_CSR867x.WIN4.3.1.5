@@ -1,0 +1,55 @@
+<ModuleData Name="sink_low_power_mode">
+    <ConfigGroup
+        ShortId="sink_low_power_mode_readonly"
+        Id="sink_dormant_mode"
+        Node="Basic">
+        <ConfigItem
+            Id="XIO wake up source"
+            ShortId="dormant_xio"
+            Type="bitfield"
+            DefaultValue="XIO 7"
+            ConfigGroupPath="./[@ShortId='low_power']/[@ShortId='dormant']"
+            Size="13"
+            Desc="Configures the wake up source of Dormant Mode to be an XIO. Multiple XIO can be selected that will wake the device from Dormant.">
+            <bitfield key="XIO 0"
+                      value="0"/>
+            <bitfield key="XIO 1"
+                      value="1"/>
+            <bitfield key="XIO 2"
+                      value="2"/>
+            <bitfield key="XIO 3"
+                      value="3"/>
+            <bitfield key="XIO 4"
+                      value="4"/>
+            <bitfield key="XIO 5"
+                      value="5"/>
+            <bitfield key="XIO 6"
+                      value="6"/>
+            <bitfield key="XIO 7"
+                      value="7"/>
+            <bitfield key="XIO 8"
+                      value="8"/>
+            <bitfield key="XIO 9"
+                      value="9"/>
+            <bitfield key="XIO 10"
+                      value="10"/>
+            <bitfield key="XIO 11"
+                      value="11"/>
+            <bitfield key="XIO 12"
+                      value="12"/>
+        </ConfigItem>
+        <ConfigItem
+            Id="NFC wake up source"
+            ShortId="dormant_nfc"
+            Type="bitfield"
+            DefaultValue="Field Detect"
+            ConfigGroupPath="./[@ShortId='low_power']/[@ShortId='dormant']"
+            Size="3"
+            Desc="Configures the wake up source of Dormant Mode to be NFC.">
+            <bitfield key="Field Detect"
+                      value="0"/>
+            <bitfield key="Overload"
+                      value="1"/>
+        </ConfigItem>
+    </ConfigGroup>    
+</ModuleData>

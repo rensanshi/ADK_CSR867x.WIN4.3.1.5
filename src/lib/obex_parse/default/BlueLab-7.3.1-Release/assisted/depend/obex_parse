@@ -1,0 +1,13 @@
+obex_parse/default/BlueLab-7.3.1-Release/assisted/obex_parse.o:  \
+ obex_parse/obex_parse.c obex_parse/obex_parse_internal.h \
+  obex_parse/obex_parse.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h
+
+obex_parse/obex_parse_internal.h:
+
+obex_parse/obex_parse.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:

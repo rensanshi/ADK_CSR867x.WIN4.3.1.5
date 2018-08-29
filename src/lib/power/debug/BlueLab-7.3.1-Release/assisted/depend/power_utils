@@ -1,0 +1,93 @@
+power/debug/BlueLab-7.3.1-Release/assisted/power_utils.o:  \
+ power/power_utils.c \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/charger.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/charger/charger_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/vm.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/vm/vm_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/bdaddr_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/ps.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/ps/ps_if.h \
+  power/power_private.h power/power.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/adc.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/adc/adc_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/library.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/vmtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/sink_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/message/system_message.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/usb/usb_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/capsense/capsense_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/partition/partition_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/infrared/infrared_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/validation/validation_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/source_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/status/status_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdio.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stdarg.h \
+  power/power_utils.h power/power_charger.h
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/charger.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/charger/charger_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/vm.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/vm/vm_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/bdaddr_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/ps.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/ps/ps_if.h:
+
+power/power_private.h:
+
+power/power.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/adc.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/adc/adc_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/library.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/vmtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/message.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/sink_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/message/system_message.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/usb/usb_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/capsense/capsense_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/partition/partition_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/infrared/infrared_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/validation/validation_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/source_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/status/status_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdio.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stdarg.h:
+
+power/power_utils.h:
+
+power/power_charger.h:

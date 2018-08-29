@@ -1,0 +1,129 @@
+<ModuleData Name="Sink_ext_charger">
+    <DefineGroup />  
+    <ConfigGroup
+        Id="External Charger configuration"
+        ShortId="ext_charger"
+        Node="Expert"
+        ConfigGroupPath="./[@ShortId='advanced_settings']/[@ShortId='charger_config']/[@ShortId='charger_config_data']">
+        <ConfigItem
+            Id="External Charger I2C Address"
+            ShortId="ext_charger_i2c"
+            Desc="The address of the charger on the I2C bus (left-justified)."
+            Type="uint"
+            Size="8"
+            DefaultValue="0xAE" />
+        <ConfigArray
+            Id="External Charger Configuration data"
+            ShortId="ext_charger_data"
+            Desc="Raw data for external charger configuration"
+            Type="array"
+            ElementType="uint"
+            ArraySize="21">
+            <ArrayElementConfigItem
+                Id="Charger data 0"
+                ShortId="chg_data_0"
+                Desc=" "
+                DefaultValue="0x005A"/>
+            <ArrayElementConfigItem
+                Id="Charger data 1"
+                ShortId="chg_data_1"
+                Desc=" "
+                DefaultValue="0x0001"/>
+            <ArrayElementConfigItem
+                Id="Charger data 2"
+                ShortId="chg_data_2"
+                Desc=" "
+                DefaultValue="0x0097"/>
+            <ArrayElementConfigItem
+                Id="Charger data 3"
+                ShortId="chg_data_3"
+                Desc=" "
+                DefaultValue="0x00AB"/>
+            <ArrayElementConfigItem
+                Id="Charger data 4"
+                ShortId="chg_data_4"
+                Desc=" "
+                DefaultValue="0x000F"/>
+            <ArrayElementConfigItem
+                Id="Charger data 5"
+                ShortId="chg_data_5"
+                Desc=" "
+                DefaultValue="0x0091"/>
+            <ArrayElementConfigItem
+                Id="Charger data 6"
+                ShortId="chg_data_6"
+                Desc=" "
+                DefaultValue="0x004F"/>
+            <ArrayElementConfigItem
+                Id="Charger data 7"
+                ShortId="chg_data_7"
+                Desc=" "
+                DefaultValue="0x00C5"/>
+            <ArrayElementConfigItem
+                Id="Charger data 8"
+                ShortId="chg_data_8"
+                Desc=" "
+                DefaultValue="0x0000"/>
+            <ArrayElementConfigItem
+                Id="Charger data 9"
+                ShortId="chg_data_9"
+                Desc=" "
+                DefaultValue="0x0098"/>
+            <ArrayElementConfigItem
+                Id="Charger data 10"
+                ShortId="chg_data_10"
+                Desc=" "
+                DefaultValue="0x000F"/>
+            <ArrayElementConfigItem
+                Id="Charger data 11"
+                ShortId="chg_data_11"
+                Desc=" "
+                DefaultValue="0x0040"/>
+            <ArrayElementConfigItem
+                Id="Charger data 12"
+                ShortId="chg_data_12"
+                Desc=" "
+                DefaultValue="0x00FF"/>
+            <ArrayElementConfigItem
+                Id="Charger data 13"
+                ShortId="chg_data_13"
+                Desc=" "
+                DefaultValue="0x00FF"/>
+            <ArrayElementConfigItem
+                Id="Charger data 14"
+                ShortId="chg_data_14"
+                Desc=" "
+                DefaultValue="0x0098"/>
+            <ArrayElementConfigItem
+                Id="Charger data 15"
+                ShortId="chg_data_15"
+                Desc=" "
+                DefaultValue="0x0000"/>
+            <ArrayElementConfigItem
+                Id="Charger data 16"
+                ShortId="chg_data_16"
+                Desc=" "
+                DefaultValue="0x00FD"/>
+            <ArrayElementConfigItem
+                Id="Charger data 17"
+                ShortId="chg_data_17"
+                Desc=" "
+                DefaultValue="0x00A0"/>
+            <ArrayElementConfigItem
+                Id="Charger data 18"
+                ShortId="chg_data_18"
+                Desc=" "
+                DefaultValue="0x00A3"/>
+            <ArrayElementConfigItem
+                Id="Charger data 19"
+                ShortId="chg_data_19"
+                Desc=" "
+                DefaultValue="0x00CC"/>
+            <ArrayElementConfigItem
+                Id="Charger data 20"
+                ShortId="chg_data_20"
+                Desc=" "
+                DefaultValue="0x001C"/>
+        </ConfigArray>
+    </ConfigGroup>
+</ModuleData>

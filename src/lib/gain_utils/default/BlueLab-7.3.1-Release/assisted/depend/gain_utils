@@ -1,0 +1,17 @@
+gain_utils/default/BlueLab-7.3.1-Release/assisted/gain_utils.o:  \
+ gain_utils/gain_utils.c \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h \
+  gain_utils/gain_utils.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/audio_data_types.h
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h:
+
+gain_utils/gain_utils.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/audio_data_types.h:

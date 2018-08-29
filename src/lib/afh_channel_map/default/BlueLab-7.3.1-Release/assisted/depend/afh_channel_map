@@ -1,0 +1,20 @@
+afh_channel_map/default/BlueLab-7.3.1-Release/assisted/afh_channel_map.o:  \
+ afh_channel_map/afh_channel_map.c \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/kalimba.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/file/file_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/broadcast_msg_interface.h \
+  afh_channel_map/afh_channel_map.h
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/kalimba.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/file/file_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/broadcast_msg_interface.h:
+
+afh_channel_map/afh_channel_map.h:

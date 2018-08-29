@@ -1,0 +1,7 @@
+region/default/BlueLab-7.3.1-Release/assisted/region_read_unsigned.o:  \
+ region/region_read_unsigned.c region/region.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h
+
+region/region.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:

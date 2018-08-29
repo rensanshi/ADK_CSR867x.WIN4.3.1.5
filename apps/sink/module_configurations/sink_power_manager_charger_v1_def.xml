@@ -1,0 +1,906 @@
+<ModuleData Name="sink_power_manager_charger_v1" HeaderName="sink_power_manager_charger">
+    <!-- Charger V1 Configuration -->
+    <DefineGroup>
+        <DefinePattern PatternName="Vbat Battery Threshold Configuration"
+                       ShortId="vbat_battery_threshold_config">
+            <ConfigItem
+                Id="Vbat Battery Threshold Voltage [mV]"
+                ShortId="limit"
+                Desc="When Vbat (ie. the battery voltage level) crosses the threshold specified in this setting it will cause the mapped notification event to be raised."
+                Multiplier="20"
+                Size="8"
+                Type="uint"/>
+            <ConfigItem
+                Id="Vbat Notify Interval [s]"
+                ShortId="notify_period"
+                Desc="0-2550 seconds in 10 second steps (rounded down)"
+                Multiplier="10"
+                Type="uint"
+                Size="8"/>
+            <ConfigItem
+                Id="Vbat Trigger Source"
+                ShortId="sources"
+                Desc="The notification events raised can be configured to be sent during any of the specified operating modes."
+                Type="bitfield"
+                PresentHex="false"
+                Size="3">
+                <bitfield key="Automatic Sending"
+                          value="0"/>
+                <bitfield key="On User Request for Battery Level"
+                          value="1"/>
+                <bitfield key="On Initial Reading for Battery Level"
+                          value="2"/>
+            </ConfigItem>
+            <ConfigItem
+                Id="Vbat User Event"
+                ShortId="event"
+                Desc="The User or System Event mapped to the Vbat threshold transition."
+                Type="enum"
+                Size="16"
+                ShowOrdered="true">
+                <List use="g_user_event" prefix="0x40"/>
+                <List use="g_system_event"/>
+            </ConfigItem>
+        </DefinePattern>
+
+        <DefineStruct Id="Charger Progress Structure" ShortId="charger_progress_structure">
+            <ConfigItem Id="Limit" ShortId="limit"
+                Desc="Vchg threshold" Type="uint" Size="16" />
+        </DefineStruct>
+
+        <DefinePattern PatternName="Charger Configuration Settings"
+            ShortId="charger_configuration_settings">
+            <ConfigItem Id="Charger Vthm Region" ShortId="charger_vthm_region"
+                Desc="Vthm Limit Thresholds are set in Vthm Thremistor Configuration."
+                Type="enum" Size="4">
+                <enum key="Region 1 (min Vthm to Limit Threshold 1)"
+                    value="0" />
+                <enum key="Region 2 (Limit Threshold 1 to 2)"
+                    value="1" />
+                <enum key="Region 3 (Limit Threshold 2 to 3)"
+                    value="2" />
+                <enum key="Region 4 (Limit Threshold 3 to 4)"
+                    value="3" />
+                <enum key="Region 5 (Limit Threshold 4 to 5)"
+                    value="4" />
+                <enum key="Region 6 (Limit Threshold 5 to 6)"
+                    value="5" />
+                <enum key="Region 7 (Limit Threshold 6 to 7)"
+                    value="6" />
+                <enum key="Region 8 (Limit Threshold 7 to max Vthm)"
+                    value="7" />
+            </ConfigItem>
+            <ConfigItem Id="Charge" ShortId="charge"
+                Desc="Set to use this entry to control the charger"
+                Size="1" Type="bool" />
+            <ConfigItem Id="Boost" ShortId="boost"
+                Desc="Boost charging can be disabled or set to internal or externally controlled boost if the device and firmware revision supports it."
+                Size="2" Type="enum">
+                <enum key="Disabled" value="0" />
+                <enum key="Int Enabled" value="1" />
+                <enum key="Ext Enabled" value="2" />
+            </ConfigItem>
+            <ConfigItem Id="Vsel" ShortId="vsel"
+                Desc="The voltage source for the IC can be set to CHARGER or Vbat"
+                Size="1" Type="enum">
+                <enum key="CHG" value="0" />
+                <enum key="BAT" value="1" />
+            </ConfigItem>
+            <ConfigItem Id="Power Off" ShortId="power_off"
+                Desc="When checked the application will reduce to the minimum power consumption possible. Useful for powering off the device at certain temperatures."
+                Size="1" Type="bool" />
+            <ConfigItem Id="Disable Leds" ShortId="disable_leds"
+                Desc="When set the LEDs are disabled while charging."
+                Size="1" Type="bool" />
+            <ConfigItem Id="Current [mA]" ShortId="current"
+                Desc="Charge current specified in mA." Size="8" Type="uint" />
+            <ConfigItem Id="Termination Type" ShortId="termination_type"
+                Desc="Either use the device default or specify a custom voltage limit to terminate charging."
+                Size="4" Type="enum">
+                <enum key="Default" value="0" />
+                <enum key="Voltage" value="1" />
+            </ConfigItem>
+            <ConfigItem Id="Termination Voltage [mV]"
+                ShortId="termination_voltage"
+                Desc="Termination voltage in mV. Only used if Termination Type is Voltage."
+                Size="8" Type="uint" Multiplier="20" />
+        </DefinePattern>
+    </DefineGroup>
+
+    <ConfigGroup
+        ShortId="sink_power_settings"
+        Id="Sink Power Readonly"
+        Node="Basic">
+        <ConfigStruct
+            Id="Instance of a structure power_config"
+            ShortId="config_p"
+            Desc="."
+            Type="struct"
+            Struct="sink_power_config">
+            <StructElementConfigItem
+                Id="power_config"
+                ShortId="power_config"
+                Desc=".">
+                <StructElementConfigItem
+                    Id="Vref Reference Voltage Configuration Struct"
+                    ShortId="Vref_Struct"
+                    Desc="."
+                    ConfigGroupPath="./[@ShortId='battery']/[@ShortId='vref_reference_voltage_config']">
+                    <StructElementConfigItem
+                        Id="power_adc1"
+                        ShortId="power_adc1"
+                        Desc=".">
+                        <StructElementConfigItem
+                            Id="Vref ADC Source"
+                            ShortId="Vref_ADC_Source"
+                            Desc="The Vref input can be configured to use any of the available input sources given below."
+                            DefaultValue="VREF"/>
+                        <StructElementConfigItem
+                            Id="Vref Read Period When Charging [s]"
+                            ShortId="Vref_Read_Period_Charging"
+                            Desc="This configures the time interval between Vref updates in seconds while charging, 0 to disable."
+                            DefaultValue="0x14"/>
+                        <StructElementConfigItem
+                            Id="Vref Read Period When Not Charging [s]"
+                            ShortId="Vref_Read_Period_Not_Charging"
+                            Desc="This configures the timer interval between Vref updates in seconds while not charging, 0 to disable."
+                            DefaultValue="0x0014"/>
+                    </StructElementConfigItem>
+                </StructElementConfigItem>
+                <StructElementConfigItem
+                    Id="Vbat Battery Voltage Monitoring Struct"
+                    ShortId="Vbat_Struct"
+                    Desc=".">
+                    <StructElementConfigItem
+                        Id="power_adc2"
+                        ShortId="power_adc2"
+                        Desc="."
+                        ConfigGroupPath="./[@ShortId='battery']/[@ShortId='vbat_battery_voltage_monitoring']">
+                        <StructElementConfigItem
+                            Id="Vbat ADC Source"
+                            ShortId="Vbat_ADC_Source"
+                            Desc="The Vbat input can be configured to use any of the available input sources given below."
+                            DefaultValue="VBAT"/>
+                        <StructElementConfigItem
+                            Id="Vbat Read Period When Charging [s]"
+                            ShortId="Vbat_Read_Period_Charging"
+                            Desc="This configures the time interval between Vbat updates in seconds while charging, 0 to disable."
+                            DefaultValue="0x14"/>
+                        <StructElementConfigItem
+                            Id="Vbat Read Period When Not Charging [s]"
+                            ShortId="Vbat_Read_Period_Not_Charging"
+                            Desc="This configures the timer interval between Vbat updates in seconds while not charging, 0 to disable."
+                            DefaultValue="0x0014"/>
+                    </StructElementConfigItem>
+                </StructElementConfigItem>
+                <StructElementConfigItem
+                    Id="Vthm Thermistor Config"
+                    ShortId="Vthm_Struct"
+                    Desc="."
+                    ConfigGroupPath="./[@ShortId='battery']/[@ShortId='vthm_thermistor_configuration']">
+                    <StructElementConfigItem
+                        Id="power_adc3"
+                        ShortId="power_adc3"
+                        Desc=".">
+                        <StructElementConfigItem
+                            Id="Vthm ADC Source"
+                            ShortId="Vthm_ADC_Source"
+                            Desc="The Vthm input can be configured to use any of the available input sources given below."
+                            DefaultValue="AIO 1">
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="AIO 0"/>
+                        </StructElementConfigItem>
+                        <StructElementConfigItem
+                            Id="Vthm Read Period When Charging [s]"
+                            ShortId="Vthm_Read_Period_Charging"
+                            Desc="This configures the time interval between Vthm updates in seconds while charging, 0 to disable."
+                            DefaultValue="0x14"/>
+                        <StructElementConfigItem
+                            Id="Vthm Read Period When Not Charging [s]"
+                            ShortId="Vthm_Read_Period_Not_Charging"
+                            Desc="This configures the timer interval between Vthm updates in seconds while not charging, 0 to disable."
+                            DefaultValue="0x0014"/>
+                    </StructElementConfigItem>
+                    <StructElementConfigItem
+                        Id="Drive Thermistor ICS Enable"
+                        ShortId="Drive_Thermistor_ICS_Enable"
+                        Desc="When set, the internal current source is used to provide drive to the thermistor circuit."
+                        ConfigGroupPath="./[@ShortId='advanced_settings']"
+                        DefaultValue="false"/>
+                    <StructElementConfigItem
+                        Id="Drive Thermistor PIO Enable"
+                        ShortId="Drive_Thermistor_PIO_Enable"
+                        Desc="When set, a PIO is used to provide drive to the thermistor circuit."
+                        DefaultValue="true">
+                        <BuildVariant HwVariant="20-CE752-H1 20-CE751-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="false"/>
+                    </StructElementConfigItem>	
+                    <StructElementConfigItem
+                        Id="Drive Thermistor PIO"
+                        ShortId="Drive_Thermistor_PIO"
+                        Desc="When the Drive Thermistor PIO is set, this parameter sets the required PIO to be driven when a thermistor reading is taken."
+                        DefaultValue="PIO 15">
+                        <BuildVariant HwVariant="CNS11012v2 H13503v2" SwVariant="All" Value="PIO 7"/>
+                        <BuildVariant HwVariant="20-CE690-H1" SwVariant="All" Value="PIO 0"/>
+                        <BuildVariant HwVariant="20-CE752-H1 20-CE751-H1" SwVariant="All" Value="N/A"/>
+                        <BuildVariant HwVariant="20-CE972-H1 20-CE890-H1 20-CE742-H1 20-CE729-H1" SwVariant="All" Value="PIO 20"/>
+                        <BuildVariant HwVariant="20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="PIO 8"/>
+                    </StructElementConfigItem>
+                    <StructElementConfigItem
+                        Id="Thermistor Drive Delay [ms]"
+                        ShortId="Thermistor_Drive_Delay"
+                        Desc="Delay in milliseconds between activating the thermistor drive output and taking the ADC reading. This allows the voltage level to settle before the data is sampled."
+                        DefaultValue="0"/>
+                    <StructElementConfigItem
+                        Id="Use Raw Limits"
+                        ShortId="Use_Raw_Limits"
+                        Desc="When set, the limit thresholds need to be entered as raw ADC counts. When clear they need to be in mV."
+                        DefaultValue="true">
+                        <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="true"/>
+                    </StructElementConfigItem>
+                    <StructElementConfigItem
+                        Id="Limit Thresholds"
+                        ShortId="limits"
+                        Desc=".">
+                        <ArrayElementConfigItem
+                            Id="Limit Threshold 1"
+                            ShortId="lim1"
+                            Desc="Up to seven limit thresholds may be configured to provide up to eight regions of temperature based charging control. The list is ordered in ascending voltage order. The values are in units of ADC counts or millivolts depending on the setting of vthm.raw_limits. If fewer than seven limits are specified, the terminating value is 65535 (-1)."
+                            DefaultValue="0x013D">
+                            <BuildVariant HwVariant="H13179v2_H13478v2" SwVariant="All" Value="0x022E"/>
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="317"/>
+                        </ArrayElementConfigItem>
+                        <ArrayElementConfigItem
+                            Id="Limit Threshold 2"
+                            ShortId="lim2"
+                            Desc="Up to seven limit thresholds may be configured to provide up to eight regions of temperature based charging control. The list is ordered in ascending voltage order. The values are in units of ADC counts or millivolts depending on the setting of vthm.raw_limits. If fewer than seven limits are specified, the terminating value is 65535 (-1)."
+                            DefaultValue="0x02D9">
+                            <BuildVariant HwVariant="H13179v2_H13478v2" SwVariant="All" Value="0x0504"/>
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="729"/>
+                        </ArrayElementConfigItem>
+                        <ArrayElementConfigItem
+                            Id="Limit Threshold 3"
+                            ShortId="lim3"
+                            Desc="Up to seven limit thresholds may be configured to provide up to eight regions of temperature based charging control. The list is ordered in ascending voltage order. The values are in units of ADC counts or millivolts depending on the setting of vthm.raw_limits. If fewer than seven limits are specified, the terminating value is 65535 (-1)."
+                            DefaultValue="0xffff">
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="65535"/>
+                        </ArrayElementConfigItem>
+                        <ArrayElementConfigItem
+                            Id="Limit Threshold 4"
+                            ShortId="lim4"
+                            Desc="Up to seven limit thresholds may be configured to provide up to eight regions of temperature based charging control. The list is ordered in ascending voltage order. The values are in units of ADC counts or millivolts depending on the setting of vthm.raw_limits. If fewer than seven limits are specified, the terminating value is 65535 (-1)."
+                            DefaultValue="0x0000">
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="0"/>
+                        </ArrayElementConfigItem>
+                        <ArrayElementConfigItem
+                            Id="Limit Threshold 5"
+                            ShortId="lim5"
+                            Desc="Up to seven limit thresholds may be configured to provide up to eight regions of temperature based charging control. The list is ordered in ascending voltage order. The values are in units of ADC counts or millivolts depending on the setting of vthm.raw_limits. If fewer than seven limits are specified, the terminating value is 65535 (-1)."
+                            DefaultValue="0x0000">
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="0"/>
+                        </ArrayElementConfigItem>
+                        <ArrayElementConfigItem
+                            Id="Limit Threshold 6"
+                            ShortId="lim6"
+                            Desc="Up to seven limit thresholds may be configured to provide up to eight regions of temperature based charging control. The list is ordered in ascending voltage order. The values are in units of ADC counts or millivolts depending on the setting of vthm.raw_limits. If fewer than seven limits are specified, the terminating value is 65535 (-1)."
+                            DefaultValue="0x0000">
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="0"/>
+                        </ArrayElementConfigItem>
+                        <ArrayElementConfigItem
+                            Id="Limit Threshold 7"
+                            ShortId="lim7"
+                            Desc="Up to seven limit thresholds may be configured to provide up to eight regions of temperature based charging control. The list is ordered in ascending voltage order. The values are in units of ADC counts or millivolts depending on the setting of vthm.raw_limits. If fewer than seven limits are specified, the terminating value is 65535 (-1)."
+                            DefaultValue="0x0000">
+                            <BuildVariant HwVariant="20-CE972-H1 20-CE752-H1 20-CE890-H1 20-CE751-H1 20-CE690-H1 20-CE742-H1 20-CE729-H1 20-CE680-H1 20-CE679-H1 20-CE678-H1" SwVariant="All" Value="0"/>
+                        </ArrayElementConfigItem>
+                    </StructElementConfigItem>
+                </StructElementConfigItem>
+                <StructElementConfigItem
+                    Id="Vchg Charger Configuration Module"
+                    ShortId="Vchg_Struct"
+                    Desc="."
+                    ConfigGroupPath="./[@ShortId='battery']/[@ShortId='vchg_charger_configuration']">
+                    <StructElementConfigItem
+                        Id="power_adc4"
+                        ShortId="power_adc4"
+                        Desc=".">
+                        <StructElementConfigItem
+                            Id="Vchg ADC Source"
+                            ShortId="Vchg_ADC_Source"
+                            Desc="."
+                            DefaultValue="VCHG"/>
+                        <StructElementConfigItem
+                            Id="Vchg Read Period When Charging [s]"
+                            ShortId="Vchg_Read_Period_Charging"
+                            Desc="This configures the time interval between Vchg updates in seconds while charging, 0 to disable."
+                            DefaultValue="0x14"/>
+                        <StructElementConfigItem
+                            Id="Vchg Read Period When Not Charging [s]"
+                            ShortId="Vchg_Read_Period_Not_Charging"
+                            Desc="This configures the timer interval between Vchg updates in seconds while not charging, 0 to disable."
+                            DefaultValue="0x0014"/>
+                    </StructElementConfigItem>
+                </StructElementConfigItem>
+            </StructElementConfigItem>
+        </ConfigStruct>
+        <ConfigGroup
+            Id="Vbat Threshold Settings"
+            ShortId="Vbat_Threshold_Settings"
+            Node="Array"
+            ConfigGroupPath="./[@ShortId='battery']/[@ShortId='vbat_battery_voltage_monitoring']">
+            <ConfigPatternArray
+                Id="Vbat Battery Voltage Monitoring Threshold Settings"
+                ShortId="bat_events"
+                Pattern="vbat_battery_threshold_config"
+                FixedNumPatterns="6">
+                <BuildVariant HwVariant="All" SwVariant="All">
+                    <PatternArrayRow
+                        Id="Vbat_Threshold_Event_1"
+                        ShortId="Vbat_Threshold_Event_1"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_1"
+                            DefaultValue="0x87" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_1"
+                            DefaultValue="0x06" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_1"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level | On Initial Reading for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_1"
+                            DefaultValue="Battery Critical" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 2"
+                        ShortId="Vbat_Threshold_Event_2"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_2"
+                            DefaultValue="0x91" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_2"
+                            DefaultValue="0x05" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_2"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level | On Initial Reading for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_2"
+                            DefaultValue="Battery Low" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 3"
+                        ShortId="Vbat_Threshold_Event_3"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_3"
+                            DefaultValue="0x9B" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_3"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_3"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_3"
+                            DefaultValue="Gas Gauge 0" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 4"
+                        ShortId="Vbat_Threshold_Event_4"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_4"
+                            DefaultValue="0xA5" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_4"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_4"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_4"
+                            DefaultValue="Gas Gauge 1" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 5"
+                        ShortId="Vbat_Threshold_Event_5"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_5"
+                            DefaultValue="0xAF" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_5"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_5"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_5"
+                            DefaultValue="Gas Gauge 2" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 6"
+                        ShortId="Vbat_Threshold_Event_6"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_6"
+                            DefaultValue="0xFF" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_6"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_6"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_6"
+                            DefaultValue="Gas Gauge 3" />
+                    </PatternArrayRow>
+                </BuildVariant>
+                <BuildVariant HwVariant="H13179v2_H13478v2" SwVariant="All">
+                    <PatternArrayRow
+                        Id="Vbat_Threshold_Event_1"
+                        ShortId="Vbat_Threshold_Event_1"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_1"
+                            DefaultValue="0x87" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_1"
+                            DefaultValue="0x01" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_1"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level | On Initial Reading for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_1"
+                            DefaultValue="Battery Critical" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 2"
+                        ShortId="Vbat_Threshold_Event_2"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_2"
+                            DefaultValue="0x91" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_2"
+                            DefaultValue="0x05" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_2"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level | On Initial Reading for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_2"
+                            DefaultValue="Battery Low" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 3"
+                        ShortId="Vbat_Threshold_Event_3"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_3"
+                            DefaultValue="0x9B" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_3"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_3"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_3"
+                            DefaultValue="Gas Gauge 0" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 4"
+                        ShortId="Vbat_Threshold_Event_4"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_4"
+                            DefaultValue="0xA5" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_4"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_4"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_4"
+                            DefaultValue="Gas Gauge 1" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 5"
+                        ShortId="Vbat_Threshold_Event_5"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_5"
+                            DefaultValue="0xAF" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_5"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_5"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_5"
+                            DefaultValue="Gas Gauge 2" />
+                    </PatternArrayRow>
+                    <PatternArrayRow
+                        Id="Vbat Threshold Event 6"
+                        ShortId="Vbat_Threshold_Event_6"
+                        Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Battery_Threshold_Voltage_units20mV_6"
+                            DefaultValue="0xFF" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Notify_Interval_secs_6"
+                            DefaultValue="0x0" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_Trigger_Source_bitfield_6"
+                            DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                        <PatternArrayConfigItem
+                            ShortId="Vbat_UserEvent_raised_6"
+                            DefaultValue="Gas Gauge 3" />
+                    </PatternArrayRow>
+                </BuildVariant>
+                <BuildVariant HwVariant="CNS10001v4" SwVariant="All">
+                    <PatternArrayRow
+                    Id="Vbat_Threshold_Event_1"
+                    ShortId="Vbat_Threshold_Event_1"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Battery_Threshold_Voltage_units20mV_1"
+                        DefaultValue="0x87" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Notify_Interval_secs_1"
+                        DefaultValue="0x06" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Trigger_Source_bitfield_1"
+                        DefaultValue="Automatic Sending | On User Request for Battery Level | On Initial Reading for Battery Level" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_UserEvent_raised_1"
+                        DefaultValue="Battery Critical" />
+                </PatternArrayRow>
+                <PatternArrayRow
+                    Id="Vbat Threshold Event 2"
+                    ShortId="Vbat_Threshold_Event_2"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Battery_Threshold_Voltage_units20mV_2"
+                        DefaultValue="0x91" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Notify_Interval_secs_2"
+                            DefaultValue="0x1E" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Trigger_Source_bitfield_2"
+                        DefaultValue="Automatic Sending | On User Request for Battery Level | On Initial Reading for Battery Level" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_UserEvent_raised_2"
+                        DefaultValue="Battery Low" />
+                </PatternArrayRow>
+                <PatternArrayRow
+                    Id="Vbat Threshold Event 3"
+                    ShortId="Vbat_Threshold_Event_3"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Battery_Threshold_Voltage_units20mV_3"
+                        DefaultValue="0x9B" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Notify_Interval_secs_3"
+                        DefaultValue="0x0" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Trigger_Source_bitfield_3"
+                        DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_UserEvent_raised_3"
+                        DefaultValue="Gas Gauge 0" />
+                </PatternArrayRow>
+                <PatternArrayRow
+                    Id="Vbat Threshold Event 4"
+                    ShortId="Vbat_Threshold_Event_4"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Battery_Threshold_Voltage_units20mV_4"
+                        DefaultValue="0xA5" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Notify_Interval_secs_4"
+                        DefaultValue="0x0" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Trigger_Source_bitfield_4"
+                        DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_UserEvent_raised_4"
+                        DefaultValue="Gas Gauge 1" />
+                </PatternArrayRow>
+                <PatternArrayRow
+                    Id="Vbat Threshold Event 5"
+                    ShortId="Vbat_Threshold_Event_5"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Battery_Threshold_Voltage_units20mV_5"
+                        DefaultValue="0xAF" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Notify_Interval_secs_5"
+                        DefaultValue="0x0" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Trigger_Source_bitfield_5"
+                        DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_UserEvent_raised_5"
+                        DefaultValue="Gas Gauge 2" />
+                </PatternArrayRow>
+                <PatternArrayRow
+                    Id="Vbat Threshold Event 6"
+                    ShortId="Vbat_Threshold_Event_6"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Battery_Threshold_Voltage_units20mV_6"
+                        DefaultValue="0xFF" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Notify_Interval_secs_6"
+                        DefaultValue="0x0" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_Trigger_Source_bitfield_6"
+                        DefaultValue="Automatic Sending | On User Request for Battery Level" />
+                    <PatternArrayConfigItem
+                        ShortId="Vbat_UserEvent_raised_6"
+                        DefaultValue="Gas Gauge 3" />
+                </PatternArrayRow>
+                </BuildVariant>
+            </ConfigPatternArray>
+        </ConfigGroup>
+    </ConfigGroup>
+
+    <ConfigGroup ShortId="charger_progress" Id="Charger Progress"
+        Node="Basic">
+        <ConfigStruct Id="Instance of a charger_progress_structure"
+            ShortId="chg_progress" Desc="." Type="struct" Struct="charger_progress_structure">
+            <StructElementConfigItem Id="Vchg Threshold Voltage [mV]"
+                ShortId="limit"
+                Desc="Sets the USB VBUS voltage threshold. The charge current can be limited at VBUS voltages below this level."
+                ConfigGroupPath="./[@ShortId='battery']/[@ShortId='vchg_charger_configuration']"
+                DefaultValue="0x109A">
+            </StructElementConfigItem>
+        </ConfigStruct>
+    </ConfigGroup>
+
+    <ConfigGroup ShortId="charger_control" Id="Charger Control"
+        Node="Basic">
+        <ConfigGroup Id="Charger Configuration" ShortId="charger_configuration_table"
+            Node="Array" ConfigGroupPath="./[@ShortId='battery']">
+            <ConfigPatternArray Id="Charger Vthm Configuration Settings" ShortId="chg_settings"
+                Pattern="charger_configuration_settings" Presentation="ReadOnlyHeader"
+                FixedNumPatterns="8">
+                <PatternArrayRow Id="charge_1" ShortId="charge_1"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region"
+                        DefaultValue="Region 1 (min Vthm to Limit Threshold 1)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x00" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+                <PatternArrayRow Id="charge_2" ShortId="charge_2"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region" DefaultValue="Region 2 (Limit Threshold 1 to 2)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="true" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x96" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+                <PatternArrayRow Id="charge_3" ShortId="charge_3"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region" DefaultValue="Region 3 (Limit Threshold 2 to 3)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x00" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+                <PatternArrayRow Id="charge_4" ShortId="charge_4"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region" DefaultValue="Region 4 (Limit Threshold 3 to 4)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x00" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+                <PatternArrayRow Id="charge_5" ShortId="charge_5"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region" DefaultValue="Region 5 (Limit Threshold 4 to 5)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x00" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+                <PatternArrayRow Id="charge_6" ShortId="charge_6"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region" DefaultValue="Region 6 (Limit Threshold 5 to 6)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x00" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+                <PatternArrayRow Id="charge_7" ShortId="charge_7"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region" DefaultValue="Region 7 (Limit Threshold 6 to 7)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x00" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+                <PatternArrayRow Id="charge_8" ShortId="charge_8"
+                    Node="Basic">
+                    <PatternArrayConfigItem
+                        ShortId="charger_vthm_region" DefaultValue="Region 8 (Limit Threshold 7 to max Vthm)" />
+                    <PatternArrayConfigItem
+                        ShortId="charge" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="boost" DefaultValue="Disabled" />
+                    <PatternArrayConfigItem
+                        ShortId="vsel" DefaultValue="CHG" />
+                    <PatternArrayConfigItem
+                        ShortId="off" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="disable_leds" DefaultValue="false" />
+                    <PatternArrayConfigItem
+                        ShortId="current" DefaultValue="0x00" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_type" DefaultValue="Default" />
+                    <PatternArrayConfigItem
+                        ShortId="termination_voltage" DefaultValue="0x0" />
+                </PatternArrayRow>
+            </ConfigPatternArray>
+        </ConfigGroup>
+    </ConfigGroup>
+
+    <ConfigGroup
+        ShortId="sink_pmu_mon_config"
+        Id="PMU Charger Monitor"
+        Node="Basic"
+        ConfigGroupPath="./[@ShortId='battery']">
+        <ConfigItem
+            Id="Minimum charge current [mA]"
+            ShortId="min_charge_i"
+            Desc="The charge current will not be decreased below this minimum level by the PMU Charger Monitor."
+            Type="uint"
+            Size="16"
+            DefaultValue="0x0A"/>
+        <ConfigItem
+            Id="Maximum charge current [mA]"
+            ShortId="max_charge_i"
+            Desc="The charge current will not be increased above this maximum level by the PMU Charger Monitor."
+            Type="uint"
+            Size="16"
+            DefaultValue="0x64"/>
+        <ConfigItem
+            Id="Charger current step size [mA]"
+            ShortId="charger_i_step"
+            Desc="This is the amount by which the charge current will be altered when it is between the minimum and maximum charge levels based on the monitored temperature."
+            Type="uint"
+            Size="8"
+            DefaultValue="0x0A"/>
+        <ConfigItem
+            Id="Temp Lower Bound [degC]"
+            ShortId="no_incr_i_temp"
+            Desc="This forms the lower temperature bound for the PMU monitor. Below this temperature the current can be increased. Above this threshold the current is not allowed to increase"
+            Type="uint"
+            Size="8"
+            DefaultValue="0x32"/>
+        <ConfigItem
+            Id="Temp Upper Bound [degC]"
+            ShortId="decr_i_temp"
+            Desc="Temperature where current will be decreased. This forms the upper limit of the tolerated temperature bound after which the charge current will be decreased."
+            Type="uint"
+            Size="8"
+            DefaultValue="0x3C"/>
+        <ConfigItem
+            Id="Temp monitor period if charger active [ms]"
+            ShortId="monitor_period_active"
+            Desc="Temperature monitoring period when the charger is active [ms]."
+            Type="uint"
+            Size="16"
+            DefaultValue="0x0000"/>
+        <ConfigItem
+            Id="Temp monitor period if charger idle [ms]"
+            ShortId="monitor_period_idle"
+            Desc="Temperature monitoring period when the charger is idle [ms]."
+            Type="uint"
+            Size="16"
+            DefaultValue="0x0000"/>
+        <ConfigItem
+            Id="Temp monitor period if charger has no power [ms]"
+            ShortId="monitor_period_nopwr"
+            Desc="Temperature monitoring period when the charger has no power [ms]."
+            Type="uint"
+            Size="16"
+            DefaultValue="0x00000"/>
+    </ConfigGroup>
+
+</ModuleData>

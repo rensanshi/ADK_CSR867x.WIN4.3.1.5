@@ -1,0 +1,49 @@
+<ModuleData Name="sink_power_manager">
+    <DefineGroup>
+
+    </DefineGroup>
+
+    <ConfigGroup
+        ShortId="sink_power_manager_writeable"
+        Id="Sink Power Manager"
+        Node="Basic">
+        <ConfigItem
+            Id="LBIMP Enable"
+            ShortId="lbipmenable"
+            Desc="1 = Enable Low Battery intelligent Power Management, 0 = Disable Low Battery intelligent Power Management."
+            Type="bool"
+            DefaultValue="true"
+            ConfigGroupPath="./[@ShortId='advanced_settings']/[@ShortId='session_data']"
+            Size="1">
+        </ConfigItem>
+    </ConfigGroup>
+
+	<ConfigGroup
+        ShortId="sink_charging_deficit_limitations"
+        Id="Charging Deficit Limitations"
+        Node="Basic"
+        ConfigGroupPath="./[@ShortId='battery']">
+
+		<ConfigItem Id="Action to perform when streaming music and the battery level is lower than Gas Gauge 0 whilst charging" 
+			ShortId="action_when_battery_less_than_gas_gauge0"
+			Desc="What action to take when streaming audio if battery level is low whilst charging is ongoing, an action can be selected to prevent audio quality from deteriorating due to operating with low battery voltage"
+            Type="enum" Size="3"
+			DefaultValue="0x00">
+			<enum key="Take no action" value="0" />
+			<enum key="Power off device whilst charging" value="1" />
+			<enum key="Limit maximum volume level until charger is disconnected and level is above Gas Gauge 0" value="2" />
+		</ConfigItem>
+		
+		<ConfigItem	Id="Maximum volume level limit that can be used whilst charging when the battery is getting low, specified in as percentage"
+            ShortId="max_volume_limit"
+            Desc="Maximum volume level in steps that will be allowed whilst charging if the battery level is below Gas Gauge 0, e.g. 50 would represent step 8 out of 16 volume steps, this limit is maintained until charging is complete or charger cable is removed"
+            Type="uint"  
+			Size="16"
+			Range="Min=0,Max=100" 
+			DefaultValue="0x0000">
+			
+        </ConfigItem>
+    </ConfigGroup>
+	
+	
+</ModuleData>

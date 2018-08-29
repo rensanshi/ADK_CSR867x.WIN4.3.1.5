@@ -1,0 +1,9 @@
+ \
+ connection/no_ble/BlueLab-7.3.1-Release/assisted/dm_ble_connection_parameters_update.o:  \
+ connection/dm_ble_connection_parameters_update.c \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/bdaddr_.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/bdaddr_.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:

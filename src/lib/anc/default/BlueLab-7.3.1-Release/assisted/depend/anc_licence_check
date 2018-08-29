@@ -1,0 +1,14 @@
+anc/default/BlueLab-7.3.1-Release/assisted/anc_licence_check.o:  \
+ anc/anc_licence_check.c \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/feature.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/feature/feature_if.h \
+  anc/anc_licence_check.h
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/feature.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/feature/feature_if.h:
+
+anc/anc_licence_check.h:

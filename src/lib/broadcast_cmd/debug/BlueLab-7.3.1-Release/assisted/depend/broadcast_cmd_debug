@@ -1,0 +1,19 @@
+broadcast_cmd/debug/BlueLab-7.3.1-Release/assisted/broadcast_cmd_debug.o:  \
+ broadcast_cmd/broadcast_cmd_debug.c broadcast_cmd/broadcast_cmd_debug.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdio.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stdarg.h
+
+broadcast_cmd/broadcast_cmd_debug.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdio.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stdarg.h:

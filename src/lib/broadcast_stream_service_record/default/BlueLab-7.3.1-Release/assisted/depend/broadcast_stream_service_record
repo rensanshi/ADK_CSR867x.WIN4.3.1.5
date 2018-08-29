@@ -1,0 +1,12 @@
+ \
+ broadcast_stream_service_record/default/BlueLab-7.3.1-Release/assisted/broadcast_stream_service_record.o:  \
+ broadcast_stream_service_record/broadcast_stream_service_record.c \
+  broadcast_stream_service_record/broadcast_stream_service_record.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h
+
+broadcast_stream_service_record/broadcast_stream_service_record.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:

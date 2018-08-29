@@ -1,0 +1,84 @@
+<ModuleData Name="sink_aov">
+    <DefineGroup>
+        <DefineList
+            Id="AoV User Events"
+            ShortId="g_user_event">
+            <enum key="Initate Voice Recognition"
+                  value="0xCC"/>
+            <enum key="Cycle Aov Phrase"
+                  value="0xCD"/>
+        </DefineList>
+        <DefineList
+            Id="AoV System Events"
+            ShortId="g_system_event">
+            <enum key="AoV Timeout"
+                  value="0x47ED"/>
+        </DefineList>
+        <DefineStruct
+            Id="AoV Config"
+            ShortId="aov_config">
+            <ConfigItem
+                Id="Enabled"
+                ShortId="enabled"
+                Desc="If this is true then the always-on voice (AoV) functionality will be enabled in the application."
+                Type="bool"
+                Size="1">
+            </ConfigItem>
+        </DefineStruct>
+
+        <DefinePattern
+            PatternName="Trigger Phrase Files Pattern"
+            ShortId="trigger_phrase_file">
+            <ConfigItem
+                Id="File Index"
+                ShortId="file_index"
+                Desc="The index of the file to use for this trigger phrase."
+                Type="uint"
+                Size="8" />
+        </DefinePattern>
+    </DefineGroup>
+
+    <ConfigGroup
+        Id="Sink Aov Readonly"
+        ShortId="sink_aov_readonly"
+        Node="Basic">
+        <ConfigStruct
+            Id="AoV Config"
+            ShortId="aov_config"
+            Desc="Configurable items related to AoV functionality."
+            Type="struct"
+            Struct="aov_config">
+            <StructElementConfigItem
+                Id="AoV Enabled"
+                ShortId="aov_enabled"
+                Desc="If this is true then the always-on voice (AoV) functionality will be enabled in the application."
+                DefaultValue="false"
+                ConfigGroupPath="./[@ShortId='aov']">
+            </StructElementConfigItem>
+        </ConfigStruct>
+
+        <ConfigGroup
+            Id="Trigger Phrase Files Pattern"
+            ShortId="trigger_phrase_files_pattern"
+            Node="Array"
+            ConfigGroupPath="./[@ShortId='aov']">
+
+            <ConfigPatternArray
+                Id="Trigger Phrase Files"
+                ShortId="trigger_phrase_files"
+                Pattern="trigger_phrase_file"
+                MaxNumPatterns="4"
+                Presentation="FixedOrder">
+
+                <BuildVariant HwVariant="All" SwVariant="All">
+                    <PatternArrayRow Id="Trigger File 0" ShortId="trigger_file_0" Node="Basic">
+                        <PatternArrayConfigItem
+                            ShortId="file_index"
+                            DefaultValue="0" />
+                    </PatternArrayRow>
+                </BuildVariant>
+
+            </ConfigPatternArray>
+        </ConfigGroup>
+    </ConfigGroup>
+</ModuleData>

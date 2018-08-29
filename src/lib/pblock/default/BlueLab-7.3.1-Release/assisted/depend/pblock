@@ -1,0 +1,31 @@
+pblock/default/BlueLab-7.3.1-Release/assisted/pblock.o: pblock/pblock.c \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/ps.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/ps/ps_if.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/string.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stddef.h \
+  pblock/pblock.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/vmtypes.h
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/ps.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/app/ps/ps_if.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/stdlib.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/string.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/firmware/panic.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/print.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/lib/gcc-lib/xap-local-xap-assisted/3.3.3/include/stddef.h:
+
+pblock/pblock.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/vmtypes.h:

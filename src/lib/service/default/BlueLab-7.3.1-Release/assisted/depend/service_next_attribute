@@ -1,0 +1,13 @@
+service/default/BlueLab-7.3.1-Release/assisted/service_next_attribute.o:  \
+ service/service_next_attribute.c service/service_private.h \
+  service/service.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/region.h \
+  C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h
+
+service/service_private.h:
+
+service/service.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/profiles/BlueLab-7.3.1-Release/region.h:
+
+C:/BlueTooth/ADK_CSR867x.WIN4.3.1.5/tools/include/standard/csrtypes.h:
